@@ -15,10 +15,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# Embeddings y búsqueda vectorial (pesados: arrastran torch).
+# Embeddings (pesados: arrastran torch). La búsqueda es exacta con numpy.
 ml = [
     "sentence-transformers>=3.0",
-    "chromadb>=0.5",
     "scikit-learn>=1.5",
 ]
 # Proveedores de LLM. Solo se activa el que indique LLM_PROVIDER en .env.

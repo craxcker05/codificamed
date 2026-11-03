@@ -335,3 +335,61 @@ Detalle por código en `results/cobertura_catalogo.csv`; resumen en `results/cob
 
 - `uv run pytest -q`: todas las pruebas en verde.
 - `uv run python scripts/eval_negacion.py`: regenera `results/negacion_tests.json`.
+
+---
+
+## Fase 3 (parte 2) — Recuperación (RAG) sobre el catálogo
+
+**Fecha:** 2026-11-02
+**Fase CRISP-ML(Q):** Modelado (recuperación de candidatos)
+**Fuentes de cifras:** `results/recall_retrieval.json` y `results/recall_retrieval_detalle_*.csv` (generados con `python scripts/eval_retrieval.py`).
+
+### Qué se hizo
+
+- `src/codificamed/retrieval.py`: embeddings con `intfloat/multilingual-e5-base` (prefijos `query: ` y `passage: `), búsqueda exacta por coseno y `buscar(mencion, k=10)` que devuelve `Candidato(codigo, codigo_original, descripcion, score)`. Todo candidato sale del catálogo. El índice guarda una huella del catálogo y se rechaza si no coincide.
+- `scripts/build_index.py`: construye `data/index/embeddings.npy` (71486 × 768, float16) y `meta.json`. Reanudable por partes, con barra de progreso. En CPU tardó unos 45 minutos.
+- `scripts/eval_retrieval.py`: mide el recall de la recuperación.
+- Tests con codificador falso (`tests/test_retrieval.py`), sin descargar el modelo.
+
+### Decisiones
+
+- **Sin chromadb:** con 71486 filas la búsqueda exacta con numpy es suficiente y determinista. Se quitó `chromadb` del extra `ml` de `pyproject.toml`. `uv.lock` no se regeneró.
+- **Texto indexado:** solo `descripcion_es`.
+- **Menciones de la evaluación:** son las menciones DIAGNOSTICO de la pista X (`devX.tsv`) de los 50 casos (589 menciones). Son menciones "oráculo": miden la recuperación aislada de la extracción. Con menciones extraídas automáticamente el recall será igual o menor.
+
+### Resultados (`results/recall_retrieval.json`, 521 códigos gold en 50 casos)
+
+Pregunta medida: ¿el código gold aparece entre los k candidatos de alguna mención del caso?
+
+| Criterio | recall@1 | @5 | @10 | @20 |
+|---|---|---|---|---|
+| Código exacto, todos los gold (sin expansión) | 0.167 | 0.288 | 0.374 | 0.472 |
+| Categoría (3 caracteres), todos los gold (sin expansión) | 0.370 | 0.557 | 0.653 | 0.749 |
+| Código exacto, solo gold emitibles (490) | 0.178 | 0.306 | 0.398 | 0.502 |
+
+- Expandir abreviaturas en la consulta casi no cambia nada: categoría @10 pasa de 0.6526 a 0.6545 y el exacto @10 queda igual (0.3743).
+- A nivel de mención (el código de la mención entre sus propios 10 candidatos): exacto 0.338 y categoría 0.569 sobre 589 menciones.
+- Cota superior de las menciones: los 521 códigos gold tienen al menos una mención X con ese mismo código, así que el límite del recall con menciones oráculo es 100 %; el recall observado no se explica por menciones que falten.
+
+### Lectura de los fallos (revisión de 14 menciones sin acierto)
+
+- Menciones vagas cuyo código depende del contexto: "enfermedad" → R69, "masa renal" / "riñón masa" → N28.89, "adenopatías" → R59.9.
+- Descripciones del catálogo muy genéricas o con otro nivel de especificidad: "infarto agudo de miocardio" → gold I21.3, el recuperador pone antes I25.2 y otros.
+- Mención más larga que la descripción: "tumoración en la cara lateral derecha de la lengua" → D49.0.
+- El modelo confunde anatomía parecida ("masa tiroideo" devolvió "Artritis tifoidea").
+
+### Implicaciones para el criterio de éxito (F1 de categoría ≥ 0,50)
+
+El recall de categoría @10 con menciones oráculo es 0.653. El umbral de F1 de categoría no se cambia, pero la recuperación por sí sola deja un margen estrecho: el LLM debe elegir bien entre candidatos y el techo de recuperación ya está por debajo de 0.7. Mejoras a evaluar, una a la vez y midiendo en `results/`: recuperación híbrida (léxica + semántica), recuperar con el contexto de la oración además de la mención, reranking con el LLM y k mayor (el recall de categoría sube a 0.749 con k=20).
+
+### Limitaciones
+
+- 50 casos de dev (semilla 42). Es la misma muestra que usará la evaluación final: no ajustar el recuperador mirando estos fallos de forma que sobreajuste.
+- Las menciones oráculo y las del sistema real serán distintas.
+- El modelo se descargó sin token de Hugging Face (aviso de límites de tasa, sin consecuencias).
+
+### Verificación
+
+- `uv run pytest -q`: en verde.
+- `uv run python scripts/build_index.py`: construye o reanuda el índice.
+- `uv run python scripts/eval_retrieval.py`: regenera `results/recall_retrieval*.`
