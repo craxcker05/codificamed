@@ -1,0 +1,99 @@
+# Abreviaturas clínicas frecuentes en notas en español (Ecuador y Latinoamérica).
+# Clave: forma abreviada tal como aparece en la nota. Valor: expansión.
+# Revisar cada entrada con un clínico antes de expandir en producción:
+# algunas (TA, FR, FC, IC) tienen más de un significado según el contexto.
+abreviaturas:
+  # Datos del paciente y estructura de la historia
+  - {abreviatura: "pcte", expansion: "paciente"}
+  - {abreviatura: "Sr.", expansion: "señor"}
+  - {abreviatura: "Sra.", expansion: "señora"}
+  - {abreviatura: "a.", expansion: "años"}
+  - {abreviatura: "d", expansion: "días"}
+  - {abreviatura: "h", expansion: "horas"}
+  - {abreviatura: "APP", expansion: "antecedentes patológicos personales"}
+  - {abreviatura: "AF", expansion: "antecedentes familiares"}
+  - {abreviatura: "EA", expansion: "enfermedad actual"}
+  - {abreviatura: "ex. fís.", expansion: "examen físico"}
+  - {abreviatura: "Dx", expansion: "diagnóstico"}
+  - {abreviatura: "Tx", expansion: "tratamiento"}
+  - {abreviatura: "tto", expansion: "tratamiento"}
+  - {abreviatura: "Hx", expansion: "historia clínica"}
+  - {abreviatura: "Sx", expansion: "síntomas"}
+  - {abreviatura: "hosp.", expansion: "hospitalización"}
+  - {abreviatura: "s/", expansion: "sin"}
+  - {abreviatura: "c/", expansion: "con"}
+  # Signos vitales y somatometría
+  - {abreviatura: "TA", expansion: "tensión arterial"}
+  - {abreviatura: "FC", expansion: "frecuencia cardiaca"}
+  - {abreviatura: "FR", expansion: "frecuencia respiratoria"}
+  - {abreviatura: "T°", expansion: "temperatura"}
+  - {abreviatura: "SpO2", expansion: "saturación de oxígeno"}
+  - {abreviatura: "IMC", expansion: "índice de masa corporal"}
+  - {abreviatura: "PA", expansion: "presión arterial"}
+  - {abreviatura: "lpm", expansion: "latidos por minuto"}
+  - {abreviatura: "rpm", expansion: "respiraciones por minuto"}
+  # Exámenes de laboratorio
+  - {abreviatura: "BH", expansion: "biometría hemática"}
+  - {abreviatura: "EGO", expansion: "examen general de orina"}
+  - {abreviatura: "QS", expansion: "química sanguínea"}
+  - {abreviatura: "Hb", expansion: "hemoglobina"}
+  - {abreviatura: "Hto", expansion: "hematocrito"}
+  - {abreviatura: "GB", expansion: "glóbulos blancos"}
+  - {abreviatura: "Plt", expansion: "plaquetas"}
+  - {abreviatura: "VSG", expansion: "velocidad de sedimentación globular"}
+  - {abreviatura: "PCR", expansion: "proteína C reactiva"}
+  - {abreviatura: "HbA1c", expansion: "hemoglobina glicosilada"}
+  - {abreviatura: "glu", expansion: "glucosa"}
+  - {abreviatura: "Cr", expansion: "creatinina"}
+  - {abreviatura: "BUN", expansion: "nitrógeno ureico en sangre"}
+  - {abreviatura: "TSH", expansion: "hormona estimulante de la tiroides"}
+  - {abreviatura: "LDL", expansion: "lipoproteína de baja densidad"}
+  - {abreviatura: "HDL", expansion: "lipoproteína de alta densidad"}
+  # Imagen y procedimientos
+  - {abreviatura: "Rx", expansion: "radiografía"}
+  - {abreviatura: "TAC", expansion: "tomografía axial computarizada"}
+  - {abreviatura: "RMN", expansion: "resonancia magnética nuclear"}
+  - {abreviatura: "ECO", expansion: "ecografía"}
+  - {abreviatura: "ECG", expansion: "electrocardiograma"}
+  - {abreviatura: "EKG", expansion: "electrocardiograma"}
+  - {abreviatura: "EDA", expansion: "endoscopia digestiva alta"}
+  - {abreviatura: "SNG", expansion: "sonda nasogástrica"}
+  # Diagnósticos y enfermedades frecuentes
+  - {abreviatura: "HTA", expansion: "hipertensión arterial"}
+  - {abreviatura: "DM2", expansion: "diabetes mellitus tipo 2"}
+  - {abreviatura: "DM1", expansion: "diabetes mellitus tipo 1"}
+  - {abreviatura: "DM", expansion: "diabetes mellitus"}
+  - {abreviatura: "EPOC", expansion: "enfermedad pulmonar obstructiva crónica"}
+  - {abreviatura: "IC", expansion: "insuficiencia cardiaca"}
+  - {abreviatura: "IAM", expansion: "infarto agudo de miocardio"}
+  - {abreviatura: "ACV", expansion: "accidente cerebrovascular"}
+  - {abreviatura: "AVC", expansion: "accidente vascular cerebral"}
+  - {abreviatura: "TEP", expansion: "tromboembolia pulmonar"}
+  - {abreviatura: "TVP", expansion: "trombosis venosa profunda"}
+  - {abreviatura: "ITU", expansion: "infección del tracto urinario"}
+  - {abreviatura: "IVU", expansion: "infección de vías urinarias"}
+  - {abreviatura: "IRA", expansion: "infección respiratoria aguda"}
+  - {abreviatura: "IRC", expansion: "insuficiencia renal crónica"}
+  - {abreviatura: "VIH", expansion: "virus de inmunodeficiencia humana"}
+  - {abreviatura: "TARV", expansion: "terapia antirretroviral"}
+  - {abreviatura: "TBC", expansion: "tuberculosis"}
+  - {abreviatura: "EII", expansion: "enfermedad inflamatoria intestinal"}
+  - {abreviatura: "ERGE", expansion: "enfermedad por reflujo gastroesofágico"}
+  - {abreviatura: "HPB", expansion: "hiperplasia prostática benigna"}
+  - {abreviatura: "EGO+", expansion: "examen general de orina con hallazgos patológicos"}
+  # Medicación y vías de administración
+  - {abreviatura: "VO", expansion: "vía oral"}
+  - {abreviatura: "IV", expansion: "intravenoso"}
+  - {abreviatura: "IM", expansion: "intramuscular"}
+  - {abreviatura: "SC", expansion: "subcutáneo"}
+  - {abreviatura: "NPO", expansion: "nada por vía oral"}
+  - {abreviatura: "cada 8h", expansion: "cada ocho horas"}
+  - {abreviatura: "AINE", expansion: "antiinflamatorio no esteroideo"}
+  - {abreviatura: "ASA", expansion: "ácido acetilsalicílico"}
+  # Servicios y otros
+  - {abreviatura: "UCI", expansion: "unidad de cuidados intensivos"}
+  - {abreviatura: "URG", expansion: "urgencias"}
+  - {abreviatura: "CC", expansion: "consulta cardiológica"}
+  - {abreviatura: "IESS", expansion: "Instituto Ecuatoriano de Seguridad Social"}
+  - {abreviatura: "RN", expansion: "recién nacido"}
+  - {abreviatura: "G/P", expansion: "gestas y partos"}

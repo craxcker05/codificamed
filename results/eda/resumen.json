@@ -1,0 +1,591 @@
+{
+  "corpus_raiz": "final_dataset_v2_to_publish",
+  "casos_por_split": [
+    {
+      "split": "train",
+      "textos": 500,
+      "filas_D": 5661.0,
+      "casos_con_D": 500.0,
+      "filas_P": 1550.0,
+      "casos_con_P": 435.0,
+      "filas_X": 9211.0,
+      "casos_con_X": 500.0
+    },
+    {
+      "split": "dev",
+      "textos": 250,
+      "filas_D": 2683.0,
+      "casos_con_D": 250.0,
+      "filas_P": 817.0,
+      "casos_con_P": 222.0,
+      "filas_X": 4485.0,
+      "casos_con_X": 250.0
+    },
+    {
+      "split": "test",
+      "textos": 3001,
+      "filas_D": NaN,
+      "casos_con_D": NaN,
+      "filas_P": NaN,
+      "casos_con_P": NaN,
+      "filas_X": NaN,
+      "casos_con_X": NaN
+    }
+  ],
+  "longitud_textos": [
+    {
+      "split": "train",
+      "metrica": "palabras",
+      "media": 349.0,
+      "mediana": 314.5,
+      "minimo": 73,
+      "maximo": 1172,
+      "desv_std": 164.7
+    },
+    {
+      "split": "train",
+      "metrica": "caracteres",
+      "media": 2317.2,
+      "mediana": 2100.5,
+      "minimo": 556,
+      "maximo": 7466,
+      "desv_std": 1097.4
+    },
+    {
+      "split": "dev",
+      "metrica": "palabras",
+      "media": 352.3,
+      "mediana": 327.5,
+      "minimo": 69,
+      "maximo": 956,
+      "desv_std": 168.2
+    },
+    {
+      "split": "dev",
+      "metrica": "caracteres",
+      "media": 2354.0,
+      "mediana": 2220.0,
+      "minimo": 498,
+      "maximo": 6010,
+      "desv_std": 1116.8
+    },
+    {
+      "split": "test",
+      "metrica": "palabras",
+      "media": 374.1,
+      "mediana": 315.0,
+      "minimo": 20,
+      "maximo": 4901,
+      "desv_std": 309.1
+    },
+    {
+      "split": "test",
+      "metrica": "caracteres",
+      "media": 2487.6,
+      "mediana": 2103.0,
+      "minimo": 137,
+      "maximo": 32520,
+      "desv_std": 2018.6
+    }
+  ],
+  "codigos_por_caso": [
+    {
+      "split": "train",
+      "pista": "D",
+      "media": 11.32,
+      "mediana": 10.0,
+      "minimo": 1,
+      "maximo": 41,
+      "casos_sin_codigo": 0,
+      "total_casos": 500
+    },
+    {
+      "split": "train",
+      "pista": "P",
+      "media": 3.1,
+      "mediana": 3.0,
+      "minimo": 0,
+      "maximo": 17,
+      "casos_sin_codigo": 65,
+      "total_casos": 500
+    },
+    {
+      "split": "dev",
+      "pista": "D",
+      "media": 10.73,
+      "mediana": 10.0,
+      "minimo": 1,
+      "maximo": 33,
+      "casos_sin_codigo": 0,
+      "total_casos": 250
+    },
+    {
+      "split": "dev",
+      "pista": "P",
+      "media": 3.27,
+      "mediana": 3.0,
+      "minimo": 0,
+      "maximo": 11,
+      "casos_sin_codigo": 28,
+      "total_casos": 250
+    }
+  ],
+  "top30_codigos_D": [
+    {
+      "codigo": "R52",
+      "rank": 1,
+      "frecuencia": 163,
+      "casos": 163
+    },
+    {
+      "codigo": "R69",
+      "rank": 2,
+      "frecuencia": 150,
+      "casos": 150
+    },
+    {
+      "codigo": "R50.9",
+      "rank": 3,
+      "frecuencia": 142,
+      "casos": 142
+    },
+    {
+      "codigo": "I10",
+      "rank": 4,
+      "frecuencia": 116,
+      "casos": 116
+    },
+    {
+      "codigo": "R59.9",
+      "rank": 5,
+      "frecuencia": 95,
+      "casos": 95
+    },
+    {
+      "codigo": "R60.9",
+      "rank": 6,
+      "frecuencia": 91,
+      "casos": 91
+    },
+    {
+      "codigo": "R11.10",
+      "rank": 7,
+      "frecuencia": 74,
+      "casos": 74
+    },
+    {
+      "codigo": "B99.9",
+      "rank": 8,
+      "frecuencia": 70,
+      "casos": 70
+    },
+    {
+      "codigo": "R53.1",
+      "rank": 9,
+      "frecuencia": 69,
+      "casos": 69
+    },
+    {
+      "codigo": "R59.0",
+      "rank": 10,
+      "frecuencia": 64,
+      "casos": 64
+    },
+    {
+      "codigo": "E11.9",
+      "rank": 11,
+      "frecuencia": 60,
+      "casos": 60
+    },
+    {
+      "codigo": "R58",
+      "rank": 12,
+      "frecuencia": 60,
+      "casos": 60
+    },
+    {
+      "codigo": "R10.9",
+      "rank": 13,
+      "frecuencia": 58,
+      "casos": 58
+    },
+    {
+      "codigo": "D64.9",
+      "rank": 14,
+      "frecuencia": 55,
+      "casos": 55
+    },
+    {
+      "codigo": "I96",
+      "rank": 15,
+      "frecuencia": 51,
+      "casos": 51
+    },
+    {
+      "codigo": "R31.9",
+      "rank": 16,
+      "frecuencia": 47,
+      "casos": 47
+    },
+    {
+      "codigo": "R63.4",
+      "rank": 17,
+      "frecuencia": 45,
+      "casos": 45
+    },
+    {
+      "codigo": "R51",
+      "rank": 18,
+      "frecuencia": 43,
+      "casos": 43
+    },
+    {
+      "codigo": "B20",
+      "rank": 19,
+      "frecuencia": 42,
+      "casos": 42
+    },
+    {
+      "codigo": "L53.9",
+      "rank": 20,
+      "frecuencia": 41,
+      "casos": 41
+    },
+    {
+      "codigo": "N28.9",
+      "rank": 21,
+      "frecuencia": 40,
+      "casos": 40
+    },
+    {
+      "codigo": "R06.00",
+      "rank": 22,
+      "frecuencia": 39,
+      "casos": 39
+    },
+    {
+      "codigo": "T14.8",
+      "rank": 23,
+      "frecuencia": 39,
+      "casos": 39
+    },
+    {
+      "codigo": "T14.90",
+      "rank": 24,
+      "frecuencia": 39,
+      "casos": 39
+    },
+    {
+      "codigo": "D72.829",
+      "rank": 25,
+      "frecuencia": 37,
+      "casos": 37
+    },
+    {
+      "codigo": "R23.1",
+      "rank": 26,
+      "frecuencia": 37,
+      "casos": 37
+    },
+    {
+      "codigo": "I46.9",
+      "rank": 27,
+      "frecuencia": 36,
+      "casos": 36
+    },
+    {
+      "codigo": "B19.20",
+      "rank": 28,
+      "frecuencia": 34,
+      "casos": 34
+    },
+    {
+      "codigo": "F17.210",
+      "rank": 29,
+      "frecuencia": 34,
+      "casos": 34
+    },
+    {
+      "codigo": "L90.5",
+      "rank": 30,
+      "frecuencia": 34,
+      "casos": 34
+    }
+  ],
+  "labels_X": [
+    {
+      "split": "train",
+      "label": "DIAGNOSTICO",
+      "menciones": 7239
+    },
+    {
+      "split": "train",
+      "label": "PROCEDIMIENTO",
+      "menciones": 1972
+    },
+    {
+      "split": "dev",
+      "label": "DIAGNOSTICO",
+      "menciones": 3439
+    },
+    {
+      "split": "dev",
+      "label": "PROCEDIMIENTO",
+      "menciones": 1046
+    }
+  ],
+  "abreviaturas_top15": [
+    {
+      "expresion": "TAC",
+      "ocurrencias_train": 162,
+      "ocurrencias_dev": 95,
+      "ocurrencias_test": 956,
+      "ocurrencias_total": 1213,
+      "documentos_con_expresion": 808
+    },
+    {
+      "expresion": "PCR",
+      "ocurrencias_train": 46,
+      "ocurrencias_dev": 14,
+      "ocurrencias_test": 446,
+      "ocurrencias_total": 506,
+      "documentos_con_expresion": 364
+    },
+    {
+      "expresion": "VIH",
+      "ocurrencias_train": 34,
+      "ocurrencias_dev": 15,
+      "ocurrencias_test": 282,
+      "ocurrencias_total": 331,
+      "documentos_con_expresion": 263
+    },
+    {
+      "expresion": "UCI",
+      "ocurrencias_train": 36,
+      "ocurrencias_dev": 17,
+      "ocurrencias_test": 200,
+      "ocurrencias_total": 253,
+      "documentos_con_expresion": 168
+    },
+    {
+      "expresion": "RMN",
+      "ocurrencias_train": 44,
+      "ocurrencias_dev": 18,
+      "ocurrencias_test": 152,
+      "ocurrencias_total": 214,
+      "documentos_con_expresion": 157
+    },
+    {
+      "expresion": "ECG",
+      "ocurrencias_train": 28,
+      "ocurrencias_dev": 13,
+      "ocurrencias_test": 172,
+      "ocurrencias_total": 213,
+      "documentos_con_expresion": 120
+    },
+    {
+      "expresion": "VHC",
+      "ocurrencias_train": 28,
+      "ocurrencias_dev": 5,
+      "ocurrencias_test": 127,
+      "ocurrencias_total": 160,
+      "documentos_con_expresion": 114
+    },
+    {
+      "expresion": "HTA",
+      "ocurrencias_train": 13,
+      "ocurrencias_dev": 5,
+      "ocurrencias_test": 77,
+      "ocurrencias_total": 95,
+      "documentos_con_expresion": 81
+    },
+    {
+      "expresion": "TA",
+      "ocurrencias_train": 17,
+      "ocurrencias_dev": 16,
+      "ocurrencias_test": 49,
+      "ocurrencias_total": 82,
+      "documentos_con_expresion": 68
+    },
+    {
+      "expresion": "VHB",
+      "ocurrencias_train": 9,
+      "ocurrencias_dev": 4,
+      "ocurrencias_test": 67,
+      "ocurrencias_total": 80,
+      "documentos_con_expresion": 72
+    },
+    {
+      "expresion": "FC",
+      "ocurrencias_train": 9,
+      "ocurrencias_dev": 1,
+      "ocurrencias_test": 53,
+      "ocurrencias_total": 63,
+      "documentos_con_expresion": 47
+    },
+    {
+      "expresion": "DM",
+      "ocurrencias_train": 8,
+      "ocurrencias_dev": 3,
+      "ocurrencias_test": 35,
+      "ocurrencias_total": 46,
+      "documentos_con_expresion": 33
+    },
+    {
+      "expresion": "EPOC",
+      "ocurrencias_train": 8,
+      "ocurrencias_dev": 3,
+      "ocurrencias_test": 29,
+      "ocurrencias_total": 40,
+      "documentos_con_expresion": 37
+    },
+    {
+      "expresion": "FR",
+      "ocurrencias_train": 3,
+      "ocurrencias_dev": 3,
+      "ocurrencias_test": 33,
+      "ocurrencias_total": 39,
+      "documentos_con_expresion": 37
+    },
+    {
+      "expresion": "SNC",
+      "ocurrencias_train": 1,
+      "ocurrencias_dev": 0,
+      "ocurrencias_test": 28,
+      "ocurrencias_total": 29,
+      "documentos_con_expresion": 18
+    }
+  ],
+  "negacion_top15": [
+    {
+      "expresion": "no",
+      "ocurrencias_train": 993,
+      "ocurrencias_dev": 580,
+      "ocurrencias_test": 6200,
+      "ocurrencias_total": 7773,
+      "documentos_con_expresion": 2735
+    },
+    {
+      "expresion": "sin",
+      "ocurrencias_train": 883,
+      "ocurrencias_dev": 493,
+      "ocurrencias_test": 5702,
+      "ocurrencias_total": 7078,
+      "documentos_con_expresion": 2798
+    },
+    {
+      "expresion": "ni",
+      "ocurrencias_train": 303,
+      "ocurrencias_dev": 184,
+      "ocurrencias_test": 1690,
+      "ocurrencias_total": 2177,
+      "documentos_con_expresion": 1321
+    },
+    {
+      "expresion": "negativo",
+      "ocurrencias_train": 98,
+      "ocurrencias_dev": 44,
+      "ocurrencias_test": 583,
+      "ocurrencias_total": 725,
+      "documentos_con_expresion": 538
+    },
+    {
+      "expresion": "ausencia de",
+      "ocurrencias_train": 77,
+      "ocurrencias_dev": 32,
+      "ocurrencias_test": 537,
+      "ocurrencias_total": 646,
+      "documentos_con_expresion": 530
+    },
+    {
+      "expresion": "negativa",
+      "ocurrencias_train": 67,
+      "ocurrencias_dev": 40,
+      "ocurrencias_test": 423,
+      "ocurrencias_total": 530,
+      "documentos_con_expresion": 411
+    },
+    {
+      "expresion": "no presenta",
+      "ocurrencias_train": 31,
+      "ocurrencias_dev": 15,
+      "ocurrencias_test": 114,
+      "ocurrencias_total": 160,
+      "documentos_con_expresion": 143
+    },
+    {
+      "expresion": "tampoco",
+      "ocurrencias_train": 17,
+      "ocurrencias_dev": 12,
+      "ocurrencias_test": 116,
+      "ocurrencias_total": 145,
+      "documentos_con_expresion": 126
+    },
+    {
+      "expresion": "libre de",
+      "ocurrencias_train": 19,
+      "ocurrencias_dev": 20,
+      "ocurrencias_test": 97,
+      "ocurrencias_total": 136,
+      "documentos_con_expresion": 123
+    },
+    {
+      "expresion": "no hay",
+      "ocurrencias_train": 19,
+      "ocurrencias_dev": 8,
+      "ocurrencias_test": 68,
+      "ocurrencias_total": 95,
+      "documentos_con_expresion": 86
+    },
+    {
+      "expresion": "descarta",
+      "ocurrencias_train": 13,
+      "ocurrencias_dev": 6,
+      "ocurrencias_test": 54,
+      "ocurrencias_total": 73,
+      "documentos_con_expresion": 70
+    },
+    {
+      "expresion": "niega",
+      "ocurrencias_train": 11,
+      "ocurrencias_dev": 6,
+      "ocurrencias_test": 42,
+      "ocurrencias_total": 59,
+      "documentos_con_expresion": 51
+    },
+    {
+      "expresion": "no refiere",
+      "ocurrencias_train": 10,
+      "ocurrencias_dev": 5,
+      "ocurrencias_test": 43,
+      "ocurrencias_total": 58,
+      "documentos_con_expresion": 57
+    },
+    {
+      "expresion": "negó",
+      "ocurrencias_train": 5,
+      "ocurrencias_dev": 0,
+      "ocurrencias_test": 31,
+      "ocurrencias_total": 36,
+      "documentos_con_expresion": 33
+    },
+    {
+      "expresion": "no existe",
+      "ocurrencias_train": 1,
+      "ocurrencias_dev": 2,
+      "ocurrencias_test": 28,
+      "ocurrencias_total": 31,
+      "documentos_con_expresion": 29
+    }
+  ],
+  "x_diagnosticos_train_dev": {
+    "menciones_diagnostico": 10678,
+    "menciones_discontinuas": 1556,
+    "offset_coincide": 10675,
+    "con_negacion_previa": 1291,
+    "caso_sin_texto": 0,
+    "ventana_caracteres": 60
+  },
+  "codigos_D_distintos_train_dev": 2194,
+  "codigos_D_con_minusculas": 8344
+}

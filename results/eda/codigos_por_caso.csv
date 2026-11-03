@@ -1,0 +1,5 @@
+split,pista,media,mediana,minimo,maximo,casos_sin_codigo,total_casos
+train,D,11.32,10.0,1,41,0,500
+train,P,3.1,3.0,0,17,65,500
+dev,D,10.73,10.0,1,33,0,250
+dev,P,3.27,3.0,0,11,28,250

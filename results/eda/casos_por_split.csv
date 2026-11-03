@@ -1,0 +1,4 @@
+split,textos,filas_D,casos_con_D,filas_P,casos_con_P,filas_X,casos_con_X
+train,500,5661.0,500.0,1550.0,435.0,9211.0,500.0
+dev,250,2683.0,250.0,817.0,222.0,4485.0,250.0
+test,3001,,,,,,

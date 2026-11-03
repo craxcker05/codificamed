@@ -1,0 +1,30 @@
+# Secretos: nunca subir claves
+.env
+.env.*
+!.env.example
+
+# Datos: CodiEsp y el índice no se suben al repositorio
+data/raw/
+data/index/
+
+# Entornos y cachés de Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Streamlit y editores
+.streamlit/secrets.toml
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Resultados intermedios pesados (los métricas y gráficos de results/ sí se versionan)
+results/**/*.parquet
+results/**/*.pkl

@@ -1,0 +1,38 @@
+codificamed/
+├── CLAUDE.md / AGENTS.md      # reglas para el agente
+├── README.md                  # instalación y ejecución
+├── .env.example               # sin claves reales
+├── .gitignore                 # incluye .env, data/raw/, data/index/
+├── pyproject.toml
+├── config/
+│   ├── settings.py            # lee .env (pydantic-settings)
+│   └── abreviaturas.yaml      # HTA -> hipertensión arterial, etc.
+├── data/
+│   ├── raw/                   # CodiEsp descargado (no se sube)
+│   ├── processed/             # catalogo_cie10.parquet, casos_eval.jsonl
+│   ├── ficticios/             # notas cortas inventadas para la demo
+│   └── index/                 # índice vectorial (no se sube)
+├── src/codificamed/
+│   ├── preprocess.py          # limpieza, abreviaturas, oraciones
+│   ├── negation.py            # reglas NegEx/ConText en español
+│   ├── retrieval.py           # embeddings + búsqueda en catálogo
+│   ├── llm/
+│   │   ├── base.py            # interfaz LLMProvider
+│   │   ├── ollama_provider.py
+│   │   ├── anthropic_provider.py
+│   │   └── openai_provider.py
+│   ├── prompts.py
+│   ├── pipeline.py            # orquesta todo -> lista de CodigoSugerido
+│   └── schemas.py             # modelos pydantic
+├── scripts/
+│   ├── prepare_data.py
+│   ├── build_index.py
+│   ├── evaluate.py            # --provider ollama|anthropic --n 50
+│   └── compare.py             # tabla y gráficos local vs API
+├── app/streamlit_app.py
+├── tests/
+├── results/                   # métricas JSON/CSV, gráficos
+└── docs/
+    ├── BITACORA.md            # qué se hizo en cada fase CRISP-ML(Q)
+    ├── arquitectura.md
+    └── informe/               # borrador del informe ejecutivo

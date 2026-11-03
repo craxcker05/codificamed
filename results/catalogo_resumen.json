@@ -1,0 +1,21 @@
+{
+  "filas": 71486,
+  "duplicados_exactos": 0,
+  "codigo_repetido": 0,
+  "codigo_vacio": 0,
+  "descripcion_es_vacia": 0,
+  "descripcion_en_vacia": 109,
+  "codigos_con_punto": 71259,
+  "ejemplos_con_punto": [
+    "A00.0",
+    "A00.1",
+    "A00.9",
+    "A01.00",
+    "A01.01"
+  ],
+  "filas_catalogo_cie10": 71486,
+  "colisiones": 0,
+  "codigos_formato_invalido": 0,
+  "ejemplos_formato_invalido": [],
+  "categorias_distintas": 1910
+}

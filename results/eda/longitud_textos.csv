@@ -1,0 +1,7 @@
+split,metrica,media,mediana,minimo,maximo,desv_std
+train,palabras,349.0,314.5,73,1172,164.7
+train,caracteres,2317.2,2100.5,556,7466,1097.4
+dev,palabras,352.3,327.5,69,956,168.2
+dev,caracteres,2354.0,2220.0,498,6010,1116.8
+test,palabras,374.1,315.0,20,4901,309.1
+test,caracteres,2487.6,2103.0,137,32520,2018.6
