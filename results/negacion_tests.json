@@ -1,0 +1,24 @@
+{
+  "frases": 44,
+  "aciertos": 44,
+  "exactitud": 1.0,
+  "negado": {
+    "tp": 22,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "exhaustividad": 1.0
+  },
+  "confusion": {
+    "afirmado->afirmado": 14,
+    "negado->negado": 22,
+    "sospecha->sospecha": 8
+  },
+  "errores": [],
+  "notas_ficticias": {
+    "evaluados": 27,
+    "aciertos": 27,
+    "errores": []
+  },
+  "nota": "Frases escritas junto con las reglas: mide regresión, no desempeño en notas reales."
+}

@@ -292,3 +292,46 @@ Detalle por código en `results/cobertura_catalogo.csv`; resumen en `results/cob
 
 - `uv run python scripts/prepare_data.py`: termina con código 0 y regenera todos los archivos de esta fase.
 - `uv run pytest -q`: 38 pruebas en verde (normalización, colisiones, reversibilidad, unicidad del catálogo, 50 casos sin duplicados, solo dev, abreviaturas ≥ 60, notas ficticias ≥ 5 con negación, códigos de las notas en el catálogo).
+
+---
+
+## Fase 3 (parte 1) — Preprocesado y negación
+
+**Fecha:** 2026-11-02
+**Fase CRISP-ML(Q):** Modelado (componentes basados en reglas, previos al LLM)
+**Fuentes de cifras:** `results/negacion_tests.json` (generado con `python scripts/eval_negacion.py`).
+
+### Qué se hizo
+
+- `src/codificamed/preprocess.py`:
+  - Normalización que conserva la longitud (espacios raros, comillas, guiones).
+  - Expansión de las abreviaturas de `config/abreviaturas.yaml` con mapa de offsets: cada carácter del texto procesado conserva el rango del original, y `TextoProcesado.evidencia(ini, fin)` devuelve texto literal de la nota.
+  - Abreviaturas ambiguas: `TA`, `FC`, `FR`, `PA`, `T°` solo se expanden si les sigue un número; `d`, `h`, `a.` solo si les precede un número; `IC` y `CC` nunca. Abreviaturas cortas o riesgosas (`ECO`, `ASA`, `EDA`, `URG`, `BUN` y las de menos de 3 letras) exigen la capitalización exacta.
+  - Segmentación en oraciones (no corta en abreviaturas, decimales, iniciales ni numeración; un salto de línea simple de maquetación no corta).
+- `src/codificamed/negation.py`: reglas tipo NegEx/ConText con disparadores previos, posteriores y bidireccionales, ventana de alcance en palabras, terminadores (pero, sin embargo, verbos afirmativos...), pseudo-negaciones y desempate por el disparador más cercano. Estados: `afirmado`, `negado`, `sospecha`.
+- Tests: `tests/test_preprocess.py`, `tests/test_negation.py`, frases en `tests/casos_negacion.py` (44 frases, incluidas las 5 exigidas) y comprobación extremo a extremo sobre las notas ficticias.
+
+### Resultados (`results/negacion_tests.json`)
+
+- Frases de prueba: 44 de 44 correctas; clase NEGADO: precisión 1.0 y exhaustividad 1.0 (22 verdaderos positivos).
+- Notas ficticias (27 menciones: justificaciones esperadas como afirmadas y diagnósticos de `negados` como negados): 27 de 27.
+
+**Esta cifra no es una estimación de desempeño real.** Las frases se escribieron junto con las reglas, y las 15 notas ficticias también eran conocidas al afinar. Antes de corregir, la comprobación sobre las notas ficticias dio 25 de 27; los dos fallos eran reales y se corrigieron: un "probable" posterior que cruzaba una coma y calificaba a otro diagnóstico (FIC-02), y la ausencia del disparador "tampoco" (FIC-13). Esos dos casos se añadieron a las frases de prueba. Sobre notas CodiEsp no hay referencia de negación (ver Fase 1, 5.9), así que el desempeño real sigue sin medirse.
+
+### Decisiones
+
+- La negación opera sobre el texto procesado; la evidencia final se recupera siempre con `span_original` para que sea literal.
+- `sospecha` ("probable", "compatible con", "para descartar", "no se descarta") se separa de `negado`: el sistema no debe sugerirlo como confirmado.
+- El estado `Estado` vive en `negation.py`; aún no existe `schemas.py`, y se moverá allí al definir los esquemas de salida.
+
+### Limitaciones y pendientes
+
+- Sin etiquetas de referencia reales: construir un conjunto de negación anotado a mano (p. ej. con menciones X de CodiEsp) para medir de verdad.
+- Reglas conocidas débiles: "no" genérico con ventana de 6 palabras puede negar de más ("no mejora con tratamiento, neumonía"); no hay doble negación ni negación con "sin" + "descartar".
+- La normalización no convierte texto Unicode descompuesto (NFD) para no alterar los offsets.
+- Revisión clínica de las abreviaturas y de las listas de disparadores.
+
+### Verificación
+
+- `uv run pytest -q`: todas las pruebas en verde.
+- `uv run python scripts/eval_negacion.py`: regenera `results/negacion_tests.json`.
