@@ -1,0 +1,656 @@
+{
+  "casos": 50,
+  "menciones_oraculo": 589,
+  "menciones_unicas": 488,
+  "modelo": "intfloat/multilingual-e5-base",
+  "regla_seleccion": "mayor recall@10 exacto (todos los gold); empate si diferencia < 0.01: más simple (es < en < combinado; sin expansión primero) y k menor",
+  "mejor_recall10_exacto": 0.38,
+  "empatadas": [
+    "es|sin_expansion|k=10",
+    "combinado|sin_expansion|k=10",
+    "es|con_expansion|k=10",
+    "combinado|con_expansion|k=10"
+  ],
+  "elegida": {
+    "variante": "es|sin_expansion|k=10",
+    "campo": "es",
+    "expansion": false,
+    "k": 10
+  },
+  "variantes": [
+    {
+      "variante": "es|sin_expansion|k=10",
+      "campo": "es",
+      "expansion": false,
+      "k": 10,
+      "tiempo_busqueda_s": 0.548,
+      "tiempo_metricas_s": 0.113,
+      "tiempo_embeddings_consultas_s": 69.862,
+      "nota_tiempo": "búsqueda y embeddings de consultas compartidos por todas las k de la misma variante",
+      "metricas": {
+        "todos_los_gold": {
+          "n_codigos": 521,
+          "exacto": {
+            "recall@10": 0.3743
+          },
+          "categoria": {
+            "recall@10": 0.6526
+          }
+        },
+        "solo_emitibles": {
+          "n_codigos": 490,
+          "exacto": {
+            "recall@10": 0.398
+          },
+          "categoria": {
+            "recall@10": 0.649
+          }
+        },
+        "nivel_mencion": {
+          "@10": {
+            "menciones": 589,
+            "exacto": 0.3379,
+            "categoria": 0.5688,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.3599
+          }
+        }
+      }
+    },
+    {
+      "variante": "es|sin_expansion|k=20",
+      "campo": "es",
+      "expansion": false,
+      "k": 20,
+      "tiempo_busqueda_s": 0.548,
+      "tiempo_metricas_s": 0.109,
+      "tiempo_embeddings_consultas_s": 69.862,
+      "nota_tiempo": "búsqueda y embeddings de consultas compartidos por todas las k de la misma variante",
+      "metricas": {
+        "todos_los_gold": {
+          "n_codigos": 521,
+          "exacto": {
+            "recall@10": 0.3743,
+            "recall@20": 0.4722
+          },
+          "categoria": {
+            "recall@10": 0.6526,
+            "recall@20": 0.7486
+          }
+        },
+        "solo_emitibles": {
+          "n_codigos": 490,
+          "exacto": {
+            "recall@10": 0.398,
+            "recall@20": 0.502
+          },
+          "categoria": {
+            "recall@10": 0.649,
+            "recall@20": 0.7469
+          }
+        },
+        "nivel_mencion": {
+          "@10": {
+            "menciones": 589,
+            "exacto": 0.3379,
+            "categoria": 0.5688,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.3599
+          },
+          "@20": {
+            "menciones": 589,
+            "exacto": 0.4261,
+            "categoria": 0.657,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.4539
+          }
+        }
+      }
+    },
+    {
+      "variante": "es|sin_expansion|k=30",
+      "campo": "es",
+      "expansion": false,
+      "k": 30,
+      "tiempo_busqueda_s": 0.548,
+      "tiempo_metricas_s": 0.112,
+      "tiempo_embeddings_consultas_s": 69.862,
+      "nota_tiempo": "búsqueda y embeddings de consultas compartidos por todas las k de la misma variante",
+      "metricas": {
+        "todos_los_gold": {
+          "n_codigos": 521,
+          "exacto": {
+            "recall@10": 0.3743,
+            "recall@30": 0.5298
+          },
+          "categoria": {
+            "recall@10": 0.6526,
+            "recall@30": 0.7965
+          }
+        },
+        "solo_emitibles": {
+          "n_codigos": 490,
+          "exacto": {
+            "recall@10": 0.398,
+            "recall@30": 0.5633
+          },
+          "categoria": {
+            "recall@10": 0.649,
+            "recall@30": 0.7959
+          }
+        },
+        "nivel_mencion": {
+          "@10": {
+            "menciones": 589,
+            "exacto": 0.3379,
+            "categoria": 0.5688,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.3599
+          },
+          "@30": {
+            "menciones": 589,
+            "exacto": 0.4822,
+            "categoria": 0.7267,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.5136
+          }
+        }
+      }
+    },
+    {
+      "variante": "en|sin_expansion|k=10",
+      "campo": "en",
+      "expansion": false,
+      "k": 10,
+      "tiempo_busqueda_s": 0.488,
+      "tiempo_metricas_s": 0.108,
+      "tiempo_embeddings_consultas_s": 69.862,
+      "nota_tiempo": "búsqueda y embeddings de consultas compartidos por todas las k de la misma variante",
+      "metricas": {
+        "todos_los_gold": {
+          "n_codigos": 521,
+          "exacto": {
+            "recall@10": 0.3244
+          },
+          "categoria": {
+            "recall@10": 0.6065
+          }
+        },
+        "solo_emitibles": {
+          "n_codigos": 490,
+          "exacto": {
+            "recall@10": 0.3449
+          },
+          "categoria": {
+            "recall@10": 0.6143
+          }
+        },
+        "nivel_mencion": {
+          "@10": {
+            "menciones": 589,
+            "exacto": 0.2988,
+            "categoria": 0.5229,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.3183
+          }
+        }
+      }
+    },
+    {
+      "variante": "en|sin_expansion|k=20",
+      "campo": "en",
+      "expansion": false,
+      "k": 20,
+      "tiempo_busqueda_s": 0.488,
+      "tiempo_metricas_s": 0.11,
+      "tiempo_embeddings_consultas_s": 69.862,
+      "nota_tiempo": "búsqueda y embeddings de consultas compartidos por todas las k de la misma variante",
+      "metricas": {
+        "todos_los_gold": {
+          "n_codigos": 521,
+          "exacto": {
+            "recall@10": 0.3244,
+            "recall@20": 0.4549
+          },
+          "categoria": {
+            "recall@10": 0.6065,
+            "recall@20": 0.7486
+          }
+        },
+        "solo_emitibles": {
+          "n_codigos": 490,
+          "exacto": {
+            "recall@10": 0.3449,
+            "recall@20": 0.4837
+          },
+          "categoria": {
+            "recall@10": 0.6143,
+            "recall@20": 0.7531
+          }
+        },
+        "nivel_mencion": {
+          "@10": {
+            "menciones": 589,
+            "exacto": 0.2988,
+            "categoria": 0.5229,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.3183
+          },
+          "@20": {
+            "menciones": 589,
+            "exacto": 0.4126,
+            "categoria": 0.6655,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.4394
+          }
+        }
+      }
+    },
+    {
+      "variante": "combinado|sin_expansion|k=10",
+      "campo": "combinado",
+      "expansion": false,
+      "k": 10,
+      "tiempo_busqueda_s": 0.898,
+      "tiempo_metricas_s": 0.119,
+      "tiempo_embeddings_consultas_s": 69.862,
+      "nota_tiempo": "búsqueda y embeddings de consultas compartidos por todas las k de la misma variante",
+      "metricas": {
+        "todos_los_gold": {
+          "n_codigos": 521,
+          "exacto": {
+            "recall@10": 0.38
+          },
+          "categoria": {
+            "recall@10": 0.6622
+          }
+        },
+        "solo_emitibles": {
+          "n_codigos": 490,
+          "exacto": {
+            "recall@10": 0.4041
+          },
+          "categoria": {
+            "recall@10": 0.6653
+          }
+        },
+        "nivel_mencion": {
+          "@10": {
+            "menciones": 589,
+            "exacto": 0.3447,
+            "categoria": 0.5671,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.3671
+          }
+        }
+      }
+    },
+    {
+      "variante": "combinado|sin_expansion|k=20",
+      "campo": "combinado",
+      "expansion": false,
+      "k": 20,
+      "tiempo_busqueda_s": 0.898,
+      "tiempo_metricas_s": 0.092,
+      "tiempo_embeddings_consultas_s": 69.862,
+      "nota_tiempo": "búsqueda y embeddings de consultas compartidos por todas las k de la misma variante",
+      "metricas": {
+        "todos_los_gold": {
+          "n_codigos": 521,
+          "exacto": {
+            "recall@10": 0.38,
+            "recall@20": 0.4933
+          },
+          "categoria": {
+            "recall@10": 0.6622,
+            "recall@20": 0.7697
+          }
+        },
+        "solo_emitibles": {
+          "n_codigos": 490,
+          "exacto": {
+            "recall@10": 0.4041,
+            "recall@20": 0.5245
+          },
+          "categoria": {
+            "recall@10": 0.6653,
+            "recall@20": 0.7694
+          }
+        },
+        "nivel_mencion": {
+          "@10": {
+            "menciones": 589,
+            "exacto": 0.3447,
+            "categoria": 0.5671,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.3671
+          },
+          "@20": {
+            "menciones": 589,
+            "exacto": 0.4414,
+            "categoria": 0.6723,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.4702
+          }
+        }
+      }
+    },
+    {
+      "variante": "es|con_expansion|k=10",
+      "campo": "es",
+      "expansion": true,
+      "k": 10,
+      "tiempo_busqueda_s": 0.558,
+      "tiempo_metricas_s": 0.153,
+      "tiempo_embeddings_consultas_s": 4.363,
+      "nota_tiempo": "búsqueda y embeddings de consultas compartidos por todas las k de la misma variante",
+      "metricas": {
+        "todos_los_gold": {
+          "n_codigos": 521,
+          "exacto": {
+            "recall@10": 0.3743
+          },
+          "categoria": {
+            "recall@10": 0.6545
+          }
+        },
+        "solo_emitibles": {
+          "n_codigos": 490,
+          "exacto": {
+            "recall@10": 0.398
+          },
+          "categoria": {
+            "recall@10": 0.651
+          }
+        },
+        "nivel_mencion": {
+          "@10": {
+            "menciones": 589,
+            "exacto": 0.3379,
+            "categoria": 0.5688,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.3599
+          }
+        }
+      }
+    },
+    {
+      "variante": "es|con_expansion|k=20",
+      "campo": "es",
+      "expansion": true,
+      "k": 20,
+      "tiempo_busqueda_s": 0.558,
+      "tiempo_metricas_s": 0.175,
+      "tiempo_embeddings_consultas_s": 4.363,
+      "nota_tiempo": "búsqueda y embeddings de consultas compartidos por todas las k de la misma variante",
+      "metricas": {
+        "todos_los_gold": {
+          "n_codigos": 521,
+          "exacto": {
+            "recall@10": 0.3743,
+            "recall@20": 0.4722
+          },
+          "categoria": {
+            "recall@10": 0.6545,
+            "recall@20": 0.7505
+          }
+        },
+        "solo_emitibles": {
+          "n_codigos": 490,
+          "exacto": {
+            "recall@10": 0.398,
+            "recall@20": 0.502
+          },
+          "categoria": {
+            "recall@10": 0.651,
+            "recall@20": 0.749
+          }
+        },
+        "nivel_mencion": {
+          "@10": {
+            "menciones": 589,
+            "exacto": 0.3379,
+            "categoria": 0.5688,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.3599
+          },
+          "@20": {
+            "menciones": 589,
+            "exacto": 0.4261,
+            "categoria": 0.657,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.4539
+          }
+        }
+      }
+    },
+    {
+      "variante": "es|con_expansion|k=30",
+      "campo": "es",
+      "expansion": true,
+      "k": 30,
+      "tiempo_busqueda_s": 0.558,
+      "tiempo_metricas_s": 0.142,
+      "tiempo_embeddings_consultas_s": 4.363,
+      "nota_tiempo": "búsqueda y embeddings de consultas compartidos por todas las k de la misma variante",
+      "metricas": {
+        "todos_los_gold": {
+          "n_codigos": 521,
+          "exacto": {
+            "recall@10": 0.3743,
+            "recall@30": 0.5298
+          },
+          "categoria": {
+            "recall@10": 0.6545,
+            "recall@30": 0.7985
+          }
+        },
+        "solo_emitibles": {
+          "n_codigos": 490,
+          "exacto": {
+            "recall@10": 0.398,
+            "recall@30": 0.5633
+          },
+          "categoria": {
+            "recall@10": 0.651,
+            "recall@30": 0.798
+          }
+        },
+        "nivel_mencion": {
+          "@10": {
+            "menciones": 589,
+            "exacto": 0.3379,
+            "categoria": 0.5688,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.3599
+          },
+          "@30": {
+            "menciones": 589,
+            "exacto": 0.4822,
+            "categoria": 0.7267,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.5136
+          }
+        }
+      }
+    },
+    {
+      "variante": "en|con_expansion|k=10",
+      "campo": "en",
+      "expansion": true,
+      "k": 10,
+      "tiempo_busqueda_s": 0.871,
+      "tiempo_metricas_s": 0.641,
+      "tiempo_embeddings_consultas_s": 4.363,
+      "nota_tiempo": "búsqueda y embeddings de consultas compartidos por todas las k de la misma variante",
+      "metricas": {
+        "todos_los_gold": {
+          "n_codigos": 521,
+          "exacto": {
+            "recall@10": 0.3301
+          },
+          "categoria": {
+            "recall@10": 0.6084
+          }
+        },
+        "solo_emitibles": {
+          "n_codigos": 490,
+          "exacto": {
+            "recall@10": 0.351
+          },
+          "categoria": {
+            "recall@10": 0.6163
+          }
+        },
+        "nivel_mencion": {
+          "@10": {
+            "menciones": 589,
+            "exacto": 0.3056,
+            "categoria": 0.528,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.3255
+          }
+        }
+      }
+    },
+    {
+      "variante": "en|con_expansion|k=20",
+      "campo": "en",
+      "expansion": true,
+      "k": 20,
+      "tiempo_busqueda_s": 0.871,
+      "tiempo_metricas_s": 0.641,
+      "tiempo_embeddings_consultas_s": 4.363,
+      "nota_tiempo": "búsqueda y embeddings de consultas compartidos por todas las k de la misma variante",
+      "metricas": {
+        "todos_los_gold": {
+          "n_codigos": 521,
+          "exacto": {
+            "recall@10": 0.3301,
+            "recall@20": 0.4645
+          },
+          "categoria": {
+            "recall@10": 0.6084,
+            "recall@20": 0.7486
+          }
+        },
+        "solo_emitibles": {
+          "n_codigos": 490,
+          "exacto": {
+            "recall@10": 0.351,
+            "recall@20": 0.4939
+          },
+          "categoria": {
+            "recall@10": 0.6163,
+            "recall@20": 0.7531
+          }
+        },
+        "nivel_mencion": {
+          "@10": {
+            "menciones": 589,
+            "exacto": 0.3056,
+            "categoria": 0.528,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.3255
+          },
+          "@20": {
+            "menciones": 589,
+            "exacto": 0.4194,
+            "categoria": 0.6706,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.4467
+          }
+        }
+      }
+    },
+    {
+      "variante": "combinado|con_expansion|k=10",
+      "campo": "combinado",
+      "expansion": true,
+      "k": 10,
+      "tiempo_busqueda_s": 2.802,
+      "tiempo_metricas_s": 0.652,
+      "tiempo_embeddings_consultas_s": 4.363,
+      "nota_tiempo": "búsqueda y embeddings de consultas compartidos por todas las k de la misma variante",
+      "metricas": {
+        "todos_los_gold": {
+          "n_codigos": 521,
+          "exacto": {
+            "recall@10": 0.38
+          },
+          "categoria": {
+            "recall@10": 0.6622
+          }
+        },
+        "solo_emitibles": {
+          "n_codigos": 490,
+          "exacto": {
+            "recall@10": 0.4041
+          },
+          "categoria": {
+            "recall@10": 0.6653
+          }
+        },
+        "nivel_mencion": {
+          "@10": {
+            "menciones": 589,
+            "exacto": 0.3447,
+            "categoria": 0.5671,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.3671
+          }
+        }
+      }
+    },
+    {
+      "variante": "combinado|con_expansion|k=20",
+      "campo": "combinado",
+      "expansion": true,
+      "k": 20,
+      "tiempo_busqueda_s": 2.802,
+      "tiempo_metricas_s": 0.639,
+      "tiempo_embeddings_consultas_s": 4.363,
+      "nota_tiempo": "búsqueda y embeddings de consultas compartidos por todas las k de la misma variante",
+      "metricas": {
+        "todos_los_gold": {
+          "n_codigos": 521,
+          "exacto": {
+            "recall@10": 0.38,
+            "recall@20": 0.4933
+          },
+          "categoria": {
+            "recall@10": 0.6622,
+            "recall@20": 0.7697
+          }
+        },
+        "solo_emitibles": {
+          "n_codigos": 490,
+          "exacto": {
+            "recall@10": 0.4041,
+            "recall@20": 0.5245
+          },
+          "categoria": {
+            "recall@10": 0.6653,
+            "recall@20": 0.7694
+          }
+        },
+        "nivel_mencion": {
+          "@10": {
+            "menciones": 589,
+            "exacto": 0.3447,
+            "categoria": 0.5671,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.3671
+          },
+          "@20": {
+            "menciones": 589,
+            "exacto": 0.4414,
+            "categoria": 0.6723,
+            "menciones_con_codigo_emitible": 553,
+            "exacto_solo_emitibles": 0.4702
+          }
+        }
+      }
+    }
+  ]
+}

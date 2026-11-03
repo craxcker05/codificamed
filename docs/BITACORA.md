@@ -393,3 +393,82 @@ El recall de categoría @10 con menciones oráculo es 0.653. El umbral de F1 de 
 - `uv run pytest -q`: en verde.
 - `uv run python scripts/build_index.py`: construye o reanuda el índice.
 - `uv run python scripts/eval_retrieval.py`: regenera `results/recall_retrieval*.`
+
+
+---
+
+## Fase 4, iteración 2 — Variantes de recuperación y cache de embeddings
+
+**Fecha:** 2026-11-03
+**Fase CRISP-ML(Q):** Evaluación (iteración sobre la recuperación)
+**Fuentes de cifras:** `results/recall_variantes.json` (generado con `python scripts/experiment_recall.py`) y los metadatos `data/index/cache/*.json`. La línea base `results/recall_retrieval.json` no se modificó.
+
+### Diagnóstico del índice anterior (paso 0)
+
+- 71486 descripciones codificadas en CPU (`torch.cuda.is_available()` = False, 10 hilos de torch), lote 64, partes de 2048. Tiempo total: 2086 s (34,8 min). Había además una copia intermedia en `data/index/partes/`.
+
+### Cambios
+
+- `retrieval.py`: cache en `data/index/cache/{campo}_{modelo_slug}.npy` y `.json` (ids del catálogo, huella, modelo, fecha, tiempo, dispositivo). `get_or_build_embeddings(campo, modelo)` carga el cache si la huella y el modelo coinciden y solo calcula si falta. Las consultas (menciones) se cachean aparte, de forma incremental por texto. La búsqueda es producto punto en numpy. Modos `es`, `en` y `combinado` (máximo de los dos puntajes).
+- `build_index.py`: calcula solo lo que falta; `--force` recalcula. El índice de la etapa 4 se **trasladó** al cache del campo `es` sin recalcular (la huella coincidía); el archivo y la carpeta de partes antiguos se eliminaron.
+- `eval_retrieval.py`: la lógica de métricas pasó a una función reutilizable. Ahora se niega a reescribir `results/recall_retrieval.json` sin `--sobrescribir`. El formato de salida del nivel mención cambió (por k), pero el archivo de la línea base no se tocó.
+- Tests: 67 en verde (cache, huella, `--force`, vacíos, modo combinado, consultas incrementales).
+
+### Tiempos de construcción de cada cache
+
+| Cache | Tiempo | Nota |
+|---|---|---|
+| `es` | 2086 s (34,8 min) | Construido en la etapa 4 y trasladado sin recalcular; la cifra viene del log de aquella ejecución. |
+| `en` | 2138,7 s (35,6 min) | Calculado una vez en esta iteración, CPU, lote 64. 109 descripciones en inglés vacías: vector cero (puntaje 0). |
+| Menciones | 69,9 s (488 menciones únicas sin expansión) y 4,4 s (con expansión, la mayoría ya en cache) | `data/index/cache/menciones_*.npy` |
+
+Búsqueda por variante (una pasada para las 488 menciones únicas): entre 0,49 s y 2,8 s según el modo (campo `combinado` con expansión: 2,8 s).
+
+### Resultados de las variantes (50 casos de dev, 521 códigos gold, 589 menciones oráculo)
+
+El "exacto@10" y el "categoría@10" son siempre el criterio de selección; "@k" es la profundidad propia de la fila.
+
+| Campo | Abreviaturas | k | exacto@10 | categoría@10 | exacto@k | categoría@k | exacto@10 solo emitibles | mención exacto@k | mención categoría@k |
+|---|---|---|---|---|---|---|---|---|---|
+| es | sin expansión | 10 | 0,3743 | 0,6526 | 0,3743 | 0,6526 | 0,3980 | 0,3379 | 0,5688 |
+| es | sin expansión | 20 | 0,3743 | 0,6526 | 0,4722 | 0,7486 | 0,3980 | 0,4261 | 0,6570 |
+| es | sin expansión | 30 | 0,3743 | 0,6526 | 0,5298 | 0,7965 | 0,3980 | 0,4822 | 0,7267 |
+| en | sin expansión | 10 | 0,3244 | 0,6065 | 0,3244 | 0,6065 | 0,3449 | 0,2988 | 0,5229 |
+| en | sin expansión | 20 | 0,3244 | 0,6065 | 0,4549 | 0,7486 | 0,3449 | 0,4126 | 0,6655 |
+| combinado | sin expansión | 10 | 0,3800 | 0,6622 | 0,3800 | 0,6622 | 0,4041 | 0,3447 | 0,5671 |
+| combinado | sin expansión | 20 | 0,3800 | 0,6622 | 0,4933 | 0,7697 | 0,4041 | 0,4414 | 0,6723 |
+| es | con expansión | 10 | 0,3743 | 0,6545 | 0,3743 | 0,6545 | 0,3980 | 0,3379 | 0,5688 |
+| es | con expansión | 20 | 0,3743 | 0,6545 | 0,4722 | 0,7505 | 0,3980 | 0,4261 | 0,6570 |
+| es | con expansión | 30 | 0,3743 | 0,6545 | 0,5298 | 0,7985 | 0,3980 | 0,4822 | 0,7267 |
+| en | con expansión | 10 | 0,3301 | 0,6084 | 0,3301 | 0,6084 | 0,3510 | 0,3056 | 0,5280 |
+| en | con expansión | 20 | 0,3301 | 0,6084 | 0,4645 | 0,7486 | 0,3510 | 0,4194 | 0,6706 |
+| combinado | con expansión | 10 | 0,3800 | 0,6622 | 0,3800 | 0,6622 | 0,4041 | 0,3447 | 0,5671 |
+| combinado | con expansión | 20 | 0,3800 | 0,6622 | 0,4933 | 0,7697 | 0,4041 | 0,4414 | 0,6723 |
+
+La fila `es`, sin expansión, k = 10 reproduce la línea base de la etapa 4 (exacto@10 = 0,3743; categoría@10 = 0,6526).
+
+### Variante elegida y regla
+
+- **Regla:** mayor recall@10 exacto sobre todos los gold; si la diferencia con la mejor es menor que 0,01, se elige la más simple (es < en < combinado; sin expansión antes que con expansión) y el k menor.
+- **Resultado:** el mejor valor fue 0,3800 (`combinado`), pero `es` queda a 0,0057 (0,3743), dentro del umbral de empate. Empataron cuatro variantes (`es` y `combinado`, con y sin expansión). Se elige **`es`, sin expansión de abreviaturas, k = 10**, es decir, la configuración que ya tenía la etapa 4.
+- **Consecuencia:** en esta iteración **no mejoró el recall@10**. Ni el campo en inglés, ni combinarlo, ni expandir abreviaturas dan una mejora de al menos 0,01. El inglés solo (0,3244 y 0,3301) es peor que el español.
+- El recall sí sube al aumentar k (es: exacto 0,3743 con k = 10, 0,4722 con k = 20, 0,5298 con k = 30; categoría 0,6526, 0,7486 y 0,7965), pero eso mide otra cosa: con más candidatos el LLM de la etapa siguiente debe elegir entre más opciones. Quedó fuera de la regla de selección, que usa @10.
+- No se necesitó modificar los valores por defecto del código (`MODO_POR_DEFECTO = "es"`, `EXPANDIR_POR_DEFECTO = False`).
+
+### Limitaciones
+
+- **La selección se hizo sobre los mismos 50 casos de dev que se usarán para la evaluación final.** El sesgo es pequeño (se compararon pocas variantes y la elegida es la de partida), pero debe declararse en el informe.
+- Las métricas usan **menciones oráculo** (anotaciones de la pista X). El recall real del pipeline (etapa 5), con menciones extraídas automáticamente, será menor.
+- La diferencia entre `combinado` y `es` (0,0057) no es concluyente con 521 códigos: es del orden de 3 códigos.
+- La expansión de abreviaturas pone en mayúscula inicial la mención si empieza la oración (efecto del preprocesado); no se estudió su efecto aislado.
+
+### Pendientes
+
+- `scripts/evaluate.py` y el pipeline completo no existen aún (etapa 5); cuando se creen deberán llamar a `cargar_indice()` y `buscar()` sin argumentos (ya usan la variante elegida).
+- Si se quiere subir el recall@10, las ideas de la iteración anterior siguen abiertas (recuperación léxica híbrida, contexto de la oración, reranking), porque los campos y la expansión no ayudan.
+
+### Verificación
+
+- `uv run pytest -q`: en verde.
+- `uv run python scripts/build_index.py`: no recalcula nada si el cache es válido.
+- `uv run python scripts/experiment_recall.py`: regenera `results/recall_variantes.json`.

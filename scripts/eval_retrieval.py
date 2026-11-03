@@ -51,61 +51,72 @@ def menciones_por_caso(ids: set[str]) -> dict[str, list[tuple[str, str]]]:
     return salida
 
 
-def evaluar(indice, casos, menciones, expandir: bool, kmax: int) -> dict:
-    catalogo = set(pd.read_parquet(RUTA_CATALOGO)["codigo"])
-    # Consultas únicas -> candidatos (una sola pasada por el modelo)
-    unicas = sorted({m for ms in menciones.values() for m, _ in ms})
-    consulta = {m: (preprocesar(m).texto if expandir else m) for m in unicas}
-    cand = dict(zip(unicas, indice.buscar_lote([consulta[m] for m in unicas], kmax), strict=True))
+def metricas(cand: dict[str, list[str]], casos: list[dict], menciones: dict, ks: tuple[int, ...]) -> dict:
+    """Recall@k exacto y de categoría (todos los gold / solo emitibles) y a nivel de mención.
 
+    `cand`: mención -> códigos candidatos ordenados (al menos max(ks) por mención).
+    """
+    catalogo = set(pd.read_parquet(RUTA_CATALOGO)["codigo"])
     filas = []
     for caso in casos:
         ms = menciones[caso["id"]]
         for gold in caso["codigos_gold"]:
-            rangos = []  # mejor rango (1-based) entre todas las menciones del caso; None si no aparece
-            rango_cat = None
+            rango_exacto = rango_cat = None  # mejor rango (1-based) entre las menciones del caso
             for m, _ in ms:
                 for r, c in enumerate(cand[m], start=1):
-                    if c.codigo == gold and (not rangos or r < rangos[0]):
-                        rangos = [r]
-                    if categoria(c.codigo) == categoria(gold) and (rango_cat is None or r < rango_cat):
+                    if c == gold and (rango_exacto is None or r < rango_exacto):
+                        rango_exacto = r
+                    if categoria(c) == categoria(gold) and (rango_cat is None or r < rango_cat):
                         rango_cat = r
             filas.append({"id": caso["id"], "gold": gold, "emitible": gold in catalogo,
-                          "rango_exacto": rangos[0] if rangos else None, "rango_categoria": rango_cat})
+                          "rango_exacto": rango_exacto, "rango_categoria": rango_cat})
     df = pd.DataFrame(filas)
 
     def recall(sub: pd.DataFrame, col: str, k: int) -> float | None:
         return round(float((sub[col].notna() & (sub[col] <= k)).mean()), 4) if len(sub) else None
 
-    res = {}
+    res: dict = {}
     for nombre, sub in (("todos_los_gold", df), ("solo_emitibles", df[df["emitible"]])):
         res[nombre] = {"n_codigos": int(len(sub)),
-                       "exacto": {f"recall@{k}": recall(sub, "rango_exacto", k) for k in KS if k <= kmax},
-                       "categoria": {f"recall@{k}": recall(sub, "rango_categoria", k) for k in KS if k <= kmax}}
-
-    # Nivel de mención: el código X de la mención entre sus propios candidatos
-    n = ok = ok_cat = n_em = ok_em = 0
-    for ms in menciones.values():
-        for m, cod in ms:
-            n += 1
-            codigos = [c.codigo for c in cand[m][:10]]
-            hit = cod in codigos
-            ok += hit
-            ok_cat += any(categoria(c) == categoria(cod) for c in codigos)
-            if cod in catalogo:
-                n_em += 1
-                ok_em += hit
-    res["nivel_mencion@10"] = {
-        "menciones": n, "exacto": round(ok / n, 4), "categoria": round(ok_cat / n, 4),
-        "menciones_con_codigo_emitible": n_em, "exacto_solo_emitibles": round(ok_em / n_em, 4),
-    }
+                       "exacto": {f"recall@{k}": recall(sub, "rango_exacto", k) for k in ks},
+                       "categoria": {f"recall@{k}": recall(sub, "rango_categoria", k) for k in ks}}
+    res["nivel_mencion"] = {}
+    for k in ks:
+        n = ok = ok_cat = n_em = ok_em = 0
+        for ms in menciones.values():
+            for m, cod in ms:
+                n += 1
+                codigos = cand[m][:k]
+                hit = cod in codigos
+                ok += hit
+                ok_cat += any(categoria(c) == categoria(cod) for c in codigos)
+                if cod in catalogo:
+                    n_em += 1
+                    ok_em += hit
+        res["nivel_mencion"][f"@{k}"] = {
+            "menciones": n, "exacto": round(ok / n, 4), "categoria": round(ok_cat / n, 4),
+            "menciones_con_codigo_emitible": n_em, "exacto_solo_emitibles": round(ok_em / n_em, 4)}
     return res, df
+
+
+def evaluar(indice, casos, menciones, expandir: bool, kmax: int):
+    """Compatibilidad con la etapa 4: expande (opcional), recupera y mide con KS."""
+    unicas = sorted({m for ms in menciones.values() for m, _ in ms})
+    consulta = {m: (preprocesar(m).texto if expandir else m) for m in unicas}
+    lotes = indice.buscar_lote([consulta[m] for m in unicas], kmax)
+    cand = {m: [c.codigo for c in lote] for m, lote in zip(unicas, lotes, strict=True)}
+    return metricas(cand, casos, menciones, tuple(k for k in KS if k <= kmax))
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--k", type=int, default=20, help="máximo k a recuperar (se reporta @1,5,10,20)")
+    ap.add_argument("--sobrescribir", action="store_true",
+                    help="permite reescribir results/recall_retrieval.json (línea base de la etapa 4)")
     args = ap.parse_args()
+    if (RAIZ / "results" / "recall_retrieval.json").exists() and not args.sobrescribir:
+        sys.exit("results/recall_retrieval.json es la línea base; usa scripts/experiment_recall.py "
+                 "o --sobrescribir si de verdad quieres reemplazarla.")
 
     casos = [json.loads(linea) for linea in (RAIZ / "data/processed/casos_eval.jsonl").read_text(encoding="utf-8").splitlines()]
     menciones = menciones_por_caso({c["id"] for c in casos})
