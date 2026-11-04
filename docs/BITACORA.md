@@ -472,3 +472,38 @@ La fila `es`, sin expansión, k = 10 reproduce la línea base de la etapa 4 (exa
 - `uv run pytest -q`: en verde.
 - `uv run python scripts/build_index.py`: no recalcula nada si el cache es válido.
 - `uv run python scripts/experiment_recall.py`: regenera `results/recall_variantes.json`.
+
+
+---
+
+## Etapa 5 — Pipeline completo (Fase 3 de CRISP-ML(Q): Modelado)
+
+**Fecha:** 2026-11-03
+
+### Qué se hizo
+
+- `src/codificamed/schemas.py`: esquemas pydantic (respuestas del LLM y salida `ResultadoNota`).
+- `src/codificamed/pipeline.py`: `analizar(nota, proveedor=None, indice=None, k=10, usar_negacion=True)`:
+  1. preprocesa la nota; 2. el LLM extrae menciones (se descartan las que no son literales);
+  3. `negation.py` marca afirmado/negado/sospecha; 4. recupera 10 candidatos solo para las afirmadas;
+  5. el LLM elige un código entre los candidatos o `null`; 6. post-proceso: código en el catálogo y
+  evidencia literal de la nota (si no, error). Los negados y sospechas salen aparte, sin código.
+  JSON validado con pydantic y hasta 2 reintentos si es inválido. Se registran llamadas y tiempo.
+- `src/codificamed/__main__.py`: `python -m codificamed "nota"`.
+- `tests/test_pipeline.py`: LLM e índice falsos; pytest en verde.
+
+### Decisiones
+
+- Los negados no pasan por recuperación ni segunda llamada al LLM (menos tiempo; no se sugieren de todos modos).
+- No se registran tokens: los proveedores solo devuelven texto; se registran llamadas y segundos.
+- `usar_negacion=False` queda disponible para la ablación de la etapa 6.
+
+### Verificación
+
+- `uv run pytest -q`: en verde.
+- Prueba manual con una nota ficticia (sin guardar resultados en `results/`): con `LLM_PROVIDER=ollama` (qwen2.5:7b-instruct) y con `LLM_PROVIDER=gemini` cambiando solo la variable, ambos devuelven `cefalea occipital` → R51 con evidencia literal y `dolor torácico` como negado. Gemini además codificó `DM2` → E11.9; Ollama no extrajo HTA ni DM2 como menciones.
+
+### Pendientes
+
+- Revisión manual de salidas (¿la evidencia justifica el código?) y métricas: etapa 6.
+- La extracción de menciones del modelo local omite diagnósticos; evaluar si requiere mejorar el prompt.
