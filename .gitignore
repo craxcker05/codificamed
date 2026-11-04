@@ -29,3 +29,7 @@ Thumbs.db
 results/**/*.parquet
 results/**/*.pkl
 logs/
+
+# Instrucciones del agente y planes: no se suben
+CLAUDE.md
+Plan*.md
