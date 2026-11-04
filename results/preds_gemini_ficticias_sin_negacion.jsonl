@@ -1,0 +1,6 @@
+{"id": "FIC-01", "codigos": ["E119", "I161", "R51"], "negados": [], "segundos": 15.65, "llamadas": 6, "error": null}
+{"id": "FIC-02", "codigos": ["R0981"], "negados": [], "segundos": 5.43, "llamadas": 5, "error": null}
+{"id": "FIC-03", "codigos": [], "negados": [], "segundos": 21.94, "llamadas": 8, "error": null}
+{"id": "FIC-04", "codigos": ["R300", "R350"], "negados": [], "segundos": 18.78, "llamadas": 5, "error": null}
+{"id": "FIC-05", "codigos": ["R05"], "negados": [], "segundos": 4.94, "llamadas": 6, "error": null}
+{"id": "FIC-06", "codigos": ["E119", "E162"], "negados": [], "segundos": 3.11, "llamadas": 4, "error": null}

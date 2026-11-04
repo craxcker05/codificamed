@@ -1,0 +1,15 @@
+{"id": "FIC-01", "codigos": ["E119", "I161", "R51"], "negados": ["dolor torácico"], "segundos": 14.2, "llamadas": 5, "error": null}
+{"id": "FIC-02", "codigos": ["R0981"], "negados": ["fiebre"], "segundos": 3.55, "llamadas": 4, "error": null}
+{"id": "FIC-03", "codigos": [], "negados": ["afebril", "buena perfusión"], "segundos": 5.16, "llamadas": 6, "error": null}
+{"id": "FIC-04", "codigos": ["R300", "R350"], "negados": [], "segundos": 37.64, "llamadas": 5, "error": null}
+{"id": "FIC-05", "codigos": ["R05"], "negados": ["disnea en reposo"], "segundos": 4.04, "llamadas": 5, "error": null}
+{"id": "FIC-06", "codigos": ["E119"], "negados": ["complicaciones conocidas", "hipoglucemias referidas"], "segundos": 1.61, "llamadas": 2, "error": null}
+{"id": "FIC-07", "codigos": ["I5040", "R0609"], "negados": ["TEP", "dolor pleurítico"], "segundos": 4.09, "llamadas": 5, "error": null}
+{"id": "FIC-08", "codigos": ["D509", "R531"], "negados": [], "segundos": 54.63, "llamadas": 5, "error": null}
+{"id": "FIC-09", "codigos": ["E668", "E7801", "E782"], "negados": [], "segundos": 4.55, "llamadas": 5, "error": null}
+{"id": "FIC-10", "codigos": ["B20"], "negados": ["síntomas oportunistas actuales"], "segundos": 1.54, "llamadas": 2, "error": null}
+{"id": "FIC-11", "codigos": ["M9903"], "negados": ["déficit neurológico"], "segundos": 3.62, "llamadas": 4, "error": null}
+{"id": "FIC-12", "codigos": ["J449", "R0609"], "negados": ["hemoptisis"], "segundos": 51.39, "llamadas": 4, "error": null}
+{"id": "FIC-13", "codigos": ["R002", "R42"], "negados": ["dolor torácico"], "segundos": 5.66, "llamadas": 5, "error": null}
+{"id": "FIC-14", "codigos": ["J069"], "negados": ["dificultad respiratoria", "signos de neumonía"], "segundos": 3.38, "llamadas": 4, "error": null}
+{"id": "FIC-15", "codigos": ["K5900", "R5383", "R635"], "negados": ["hipopotasemia"], "segundos": 26.39, "llamadas": 7, "error": null}

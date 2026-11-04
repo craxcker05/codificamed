@@ -1,0 +1,5 @@
+{"id": "FIC-01", "codigos": ["R51"], "negados": ["dolor torácico"], "segundos": 85.42, "llamadas": 2, "error": null}
+{"id": "FIC-02", "codigos": ["J060", "R0981", "R1312"], "negados": [], "segundos": 150.16, "llamadas": 5, "error": null}
+{"id": "FIC-03", "codigos": ["K2980", "K591", "R1113"], "negados": ["afebril", "buena perfusión"], "segundos": 222.28, "llamadas": 6, "error": null}
+{"id": "FIC-04", "codigos": ["N940", "R300", "R350"], "negados": [], "segundos": 163.88, "llamadas": 5, "error": null}
+{"id": "FIC-05", "codigos": ["J17", "R05", "R5081"], "negados": [], "segundos": 218.44, "llamadas": 6, "error": null}

@@ -1,0 +1,66 @@
+{
+  "proveedor": "gemini",
+  "modelo": "gemini-3.5-flash-lite",
+  "ficticias": {
+    "notas": 6,
+    "con_error": 0,
+    "codigo_completo": {
+      "micro": {
+        "precision": 0.375,
+        "recall": 0.375,
+        "f1": 0.375
+      },
+      "macro": {
+        "precision": 0.2778,
+        "recall": 0.2778,
+        "f1": 0.2778
+      }
+    },
+    "categoria_3": {
+      "micro": {
+        "precision": 0.375,
+        "recall": 0.375,
+        "f1": 0.375
+      },
+      "macro": {
+        "precision": 0.2778,
+        "recall": 0.2778,
+        "f1": 0.2778
+      }
+    },
+    "segundos_medio_por_nota": 11.03,
+    "costo_estimado_usd": 0.0,
+    "negados_totales": 4,
+    "negados_sugeridos_como_confirmados": 0
+  },
+  "dev": {
+    "notas": 6,
+    "con_error": 0,
+    "codigo_completo": {
+      "micro": {
+        "precision": 0.5417,
+        "recall": 0.1757,
+        "f1": 0.2653
+      },
+      "macro": {
+        "precision": 0.6048,
+        "recall": 0.188,
+        "f1": 0.2702
+      }
+    },
+    "categoria_3": {
+      "micro": {
+        "precision": 0.6957,
+        "recall": 0.2319,
+        "f1": 0.3478
+      },
+      "macro": {
+        "precision": 0.7056,
+        "recall": 0.228,
+        "f1": 0.3273
+      }
+    },
+    "segundos_medio_por_nota": 57.17,
+    "costo_estimado_usd": 0.0
+  }
+}

@@ -507,3 +507,103 @@ La fila `es`, sin expansión, k = 10 reproduce la línea base de la etapa 4 (exa
 
 - Revisión manual de salidas (¿la evidencia justifica el código?) y métricas: etapa 6.
 - La extracción de menciones del modelo local omite diagnósticos; evaluar si requiere mejorar el prompt.
+
+
+---
+
+## Etapa 6 — Evaluación y comparación (Fase 4), resultados PARCIALES
+
+**Fecha:** 2026-11-03
+**Fase CRISP-ML(Q):** Evaluación
+**Fuentes de cifras:** `results/metricas_gemini.json`, `results/metricas_gemini_sin_negacion.json`, `results/metricas_ollama.json`, `results/preds_*.jsonl`, `results/comparacion.md`, `results/errores_ejemplos.md`.
+
+### Qué se hizo
+
+- `scripts/evaluate.py` (reanudable; guarda cada nota en `results/preds_*.jsonl`; métricas micro y macro a código completo y a categoría de 3 caracteres; tiempo por nota; negados sugeridos como confirmados en ficticias; opción `--sin-negacion` para la ablación).
+- `scripts/compare.py` (tabla, gráfico `results/comparacion_f1.png` y peores casos por nota).
+
+### Alcance real de la evaluación (limitación importante)
+
+**Por falta de tiempo y recursos de cómputo, la evaluación NO se hizo con los 50 casos de dev ni con las 15 notas ficticias completas.** Se interrumpió la corrida larga y se reportan solo las notas que alcanzaron a procesarse:
+
+| Proveedor | Ficticias evaluadas | Casos dev evaluados |
+|---|---|---|
+| gemini (`gemini-3.5-flash-lite`) | 6 | 6 |
+| ollama (`qwen2.5:7b-instruct`) | 5 | 0 |
+
+Con muestras tan pequeñas las métricas son indicativas, **no estimaciones fiables** de desempeño. La comparación Ollama vs Gemini es solo parcial: Ollama no tiene casos dev, por lo que no hay F1 comparable sobre dev.
+
+### Resultados medidos
+
+Gemini, 6 casos de dev (`metricas_gemini.json`, bloque `dev`):
+
+| Métrica | Valor |
+|---|---|
+| F1 micro, código completo | 0.2653 (precisión 0.5417, exhaustividad 0.1757) |
+| F1 micro, categoría de 3 caracteres | 0.3478 (precisión 0.6957, exhaustividad 0.2319) |
+| F1 macro, categoría | 0.3273 |
+| Tiempo medio por nota | 57.17 s |
+
+Gemini, 6 notas ficticias (`bloque ficticias`): F1 micro 0.375 (código y categoría); tiempo medio 11.03 s; 0 de 4 negados sugeridos como confirmados.
+
+Ollama, 5 notas ficticias (`metricas_ollama.json`): F1 micro 0.1 (precisión 0.0769, exhaustividad 0.1429); tiempo medio 168.04 s por nota; 0 de 4 negados sugeridos como confirmados.
+
+Ablación sin módulo de negación (Gemini, 6 ficticias, `metricas_gemini_sin_negacion.json`): negados sugeridos como confirmados 0 de 4, igual que con negación; F1 micro 0.3529 (sin negación) frente a 0.375 (con negación). Con esta muestra la ablación no permite concluir que la negación evite errores de negados, porque el LLM ya no extrajo/codificó esos negados como sugerencias.
+
+### Frente a los criterios de éxito de la Fase 1
+
+| Criterio | Resultado medido | ¿Cumple? |
+|---|---|---|
+| F1 categoría ≥ 0,50 en 50 casos de dev | 0.3478 en 6 casos (Gemini) | No cumplido en la muestra; sin medir en 50 casos |
+| 0 negados sugeridos como confirmados en 15 ficticias | 0 de 4 en 6 notas (Gemini) y 0 de 4 en 5 notas (Ollama) | Sin incumplimientos en lo evaluado; no se evaluaron las 15 |
+| Tiempo medio ≤ 120 s con qwen2.5:7b en local | 168.04 s en 5 notas ficticias | No cumplido en la muestra |
+
+### Decisiones y pendientes
+
+- Se interrumpió la evaluación completa por restricciones de tiempo; queda como pendiente ejecutar `python scripts/evaluate.py --provider ollama|gemini --n 50` (reanuda desde `results/preds_*.jsonl`).
+- Hallazgo cualitativo: la exhaustividad es baja (0.23 a categoría en dev); el cuello de botella probable es la extracción de menciones y el recall de recuperación (0.653 de categoría @10 con menciones oráculo, Etapa 4). No se probó una mejora.
+- El modelo local supera el umbral de tiempo en las notas medidas; considerar un modelo más pequeño o menos llamadas por nota.
+
+---
+
+## Etapa 8 — Monitoreo y mantenimiento (Fase 6)
+
+**Fecha:** 2026-11-03
+**Fase CRISP-ML(Q):** Monitoreo y mantenimiento
+
+### Qué se hizo
+
+- `app/streamlit_app.py`: app mínima (nota, proveedor, ejemplo ficticio, tabla de códigos con evidencia resaltada: verde = confirmado, gris tachado = negado) con botones **Aceptar/Rechazar** por código. Muestra el tiempo real medido de cada ejecución.
+- `src/codificamed/feedback.py`: escribe `logs/feedback.csv` (`fecha, nota_id, codigo, proveedor, decision`; sin texto de la nota, el id es el de la nota ficticia o un hash corto) y `logs/latencia.csv` (`fecha, nota_id, proveedor, modelo, segundos, llamadas_llm, n_sugerencias, error`; los errores se guardan sin claves).
+- `scripts/monitor.py`: tasa de aceptación por proveedor y por código, latencia media, errores y alertas.
+- `tests/test_feedback.py`: el feedback no guarda texto; resumen y alertas del monitor.
+- Estado de la etapa 7: solo se construyó esta app mínima; no hay pestañas Comparar/Métricas ni README completo.
+
+### Qué se monitorea y umbrales de alerta
+
+| Indicador | Fuente | Umbral de alerta |
+|---|---|---|
+| Tasa de aceptación por proveedor | `logs/feedback.csv` | < 0,60 con al menos 5 decisiones |
+| Latencia media por nota | `logs/latencia.csv` | > 120 s (criterio de la Fase 1) |
+| Tasa de error | `logs/latencia.csv` | > 10 % de las ejecuciones |
+| Códigos con muchos rechazos | `monitor.py` (por código) | revisión manual de los más rechazados |
+
+Los umbrales son propuestos para este prototipo; no se calibraron con datos de uso reales (no los hay).
+
+### Actualización del catálogo y de las abreviaturas
+
+- Catálogo: reemplazar `data/processed/catalogo_fuente.tsv`, ejecutar `python scripts/prepare_data.py` y `python scripts/build_index.py` (la huella del catálogo invalida el índice anterior y recalcula; ~35 min en CPU). Revisar la cobertura en `results/cobertura_resumen.json`.
+- Abreviaturas: editar `config/abreviaturas.yaml` (revisión clínica pendiente; `TA`, `FC`, `FR`, `IC` ambiguas) y correr `pytest -q` y `python scripts/eval_negacion.py`.
+
+### Cuándo reevaluar
+
+- Cambio de catálogo, de modelo de embeddings o de modelo/proveedor LLM.
+- Cambio de abreviaturas, reglas de negación o prompts.
+- Alerta de aceptación o latencia.
+- Antes de cualquier uso fuera del prototipo: evaluación completa (50 casos de dev y 15 ficticias) que no se hizo en este proyecto.
+
+### Verificación
+
+- `uv run pytest -q`: en verde.
+- `uv run streamlit run app/streamlit_app.py`: la app carga; `uv run python scripts/monitor.py` resume `logs/`.
+- Nota: `uv sync --extra app` desinstaló los extras `ml` y `llm`; se restauró con `uv sync --all-extras`.
